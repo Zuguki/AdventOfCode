@@ -9,26 +9,26 @@ namespace AdventOfCode
     {
         private const string FileOnePath = "../../../Files/Day5FirstTask.txt";
         private const string FileTestPath = "../../../Files/Test.txt";
-        private static int maxValue;
+        private static int _maxValue;
 
         public static int Task1()
         {
-            var numbersCollection = GetFileInput(FileOnePath);
+            var numbersCollection = GetFileInput();
             SetMaxValues(numbersCollection);
-            var matrix = new int[maxValue + 1, maxValue + 1];
+            var matrix = new int[_maxValue + 1, _maxValue + 1];
 
             foreach (var numbers in numbersCollection)
             {
                 if (numbers[0] == numbers[2])
-                    matrix = SetValueToMatrix(matrix, numbers, true);
+                    matrix = SetValueToMatrix(matrix, numbers);
                 if (numbers[1] == numbers[3])
-                    matrix = SetValueToMatrix(matrix, numbers, false);
+                    matrix = SetValueToMatrix(matrix, numbers);
             }
 
             var sum = 0;
-            for (var column = 0; column < maxValue; column++)
+            for (var column = 0; column < _maxValue + 1; column++)
             {
-                for (var row = 0; row < maxValue; row++)
+                for (var row = 0; row < _maxValue + 1; row++)
                 {
                     if (matrix[column, row] > 1)
                         sum++;
@@ -40,23 +40,52 @@ namespace AdventOfCode
 
         public static int Task2()
         {
-            return 1;
+            var numbersCollection = GetFileInput();
+            SetMaxValues(numbersCollection);
+            var matrix = new int[_maxValue + 1, _maxValue + 1];
+
+            matrix = numbersCollection
+                .Aggregate(matrix, SetValueToMatrix);
+
+            var sum = 0;
+            for (var column = 0; column < _maxValue + 1; column++)
+            {
+                for (var row = 0; row < _maxValue + 1; row++)
+                {
+                    if (matrix[column, row] > 1)
+                        sum++;
+                }
+            }
+
+            return sum;
         }
 
-        private static int[,] SetValueToMatrix(int[,] matrix, IReadOnlyList<int> numbers, bool isVertical)
+        private static int[,] SetValueToMatrix(int[,] matrix, IReadOnlyList<int> numbers)
         {
-            var min = isVertical ? Math.Min(numbers[1], numbers[3]) : Math.Min(numbers[0], numbers[2]);
-            var max = isVertical ? Math.Max(numbers[1], numbers[3]) : Math.Max(numbers[0], numbers[2]);
-            
-            while (min <= max)
+            var dx = (numbers[2] - numbers[0]) switch
             {
-                if (isVertical)
-                    while(min <= max)
-                        matrix[min++, numbers[0]]++;
-                else
-                    while(min <= max)
-                        matrix[numbers[1], min++]++;
+                > 0 => 1,
+                < 0 => -1,
+                _ => 0
+            };
+            
+            var dy = (numbers[3] - numbers[1]) switch
+            {
+                > 0 => 1,
+                < 0 => -1,
+                _ => 0
+            };
+            
+            var x = numbers[0];
+            var y = numbers[1];
+
+            while (numbers[2] != x || numbers[3] != y)
+            {
+                matrix[y, x]++;
+                x += dx;
+                y += dy;
             }
+            matrix[y, x]++;
 
             return matrix;
         }
@@ -83,8 +112,8 @@ namespace AdventOfCode
         {
             foreach (var numbers in numbersCollection)
             {
-                maxValue = Math.Max(numbers[0], numbers[2]) > maxValue ? Math.Max(numbers[0], numbers[2]) : maxValue;
-                maxValue = Math.Max(numbers[1], numbers[3]) > maxValue ? Math.Max(numbers[1], numbers[3]) : maxValue;
+                _maxValue = Math.Max(numbers[0], numbers[2]) > _maxValue ? Math.Max(numbers[0], numbers[2]) : _maxValue;
+                _maxValue = Math.Max(numbers[1], numbers[3]) > _maxValue ? Math.Max(numbers[1], numbers[3]) : _maxValue;
             }
         }
     }
