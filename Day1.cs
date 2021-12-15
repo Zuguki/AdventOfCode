@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AdventOfCode
 {
-    public static class FirstTask
+    public static class Day1
     {
         private const string FileOnePath = "../../../Files/Day1FirstTask.txt";
         private const string FileTwoPath = "../../../Files/Day1SecondTask.txt";
