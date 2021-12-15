@@ -38,6 +38,11 @@ namespace AdventOfCode
                    * Convert.ToInt32(sBinaryAddition.ToString(), 2);
         }
 
+        public static int Task2()
+        {
+            return 1;
+        }
+
         private static List<string> GetFileStrings(string filePath = FileTestPath) => File.ReadAllLines(filePath)
             .ToList();
     }
