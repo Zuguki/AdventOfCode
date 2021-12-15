@@ -21,8 +21,7 @@ namespace AdventOfCode
         {
             var numbers = GetFileInts(FileTwoPath);
             return numbers.Skip(3)
-                .Where((num, ind) => num + numbers[ind + 1] + numbers[ind + 2]
-                                     > numbers[ind] + numbers[ind + 1] + numbers[ind + 2])
+                .Where((num, ind) => num > numbers[ind])
                 .Count();
         }
 
