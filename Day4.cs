@@ -37,15 +37,13 @@ namespace AdventOfCode
             while (matchedFields.Count < fields.Count && FieldSize + counter < steps.Count)
             {
                 var field = GetResultField(fields, steps.Take(FieldSize + counter), matchedFields);
-                if (field == null)
-                {
-                    counter++;
-                }
-                else
+                if (field != null)
                 {
                     matchedFields.Add(field);
                     lastCounter = counter;   
                 }
+                else
+                    counter++;
             }
 
             Console.WriteLine(steps[FieldSize + lastCounter - 1]);
