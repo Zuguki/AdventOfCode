@@ -38,6 +38,11 @@ namespace AdventOfCode
             return sum;
         }
 
+        public static int Task2()
+        {
+            return 1;
+        }
+
         private static int[,] SetValueToMatrix(int[,] matrix, IReadOnlyList<int> numbers, bool isVertical)
         {
             var min = isVertical ? Math.Min(numbers[1], numbers[3]) : Math.Min(numbers[0], numbers[2]);
