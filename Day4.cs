@@ -18,20 +18,39 @@ namespace AdventOfCode
             var fields = GetFields(FileOnePath);
             var steps = GetSteps(FileOnePath);
             var counter = 0;
-            
-            
+
             var field = GetResultField(fields, steps.Take(FieldSize));
             while (field == null)
                 field = GetResultField(fields, steps.Take(FieldSize + ++counter));
-
-            Console.WriteLine(steps[FieldSize + counter - 1]);
 
             return GetMatrixSum(field, steps.Take(FieldSize + counter)) * steps[FieldSize + counter - 1];
         }
 
         public static int Task2()
         {
-            return 1;
+            var fields = GetFields(FileTwoPath);
+            var steps = GetSteps(FileTwoPath);
+            var matchedFields = new List<int[,]>();
+            var counter = 0;
+            var lastCounter = 0;
+
+            while (matchedFields.Count < fields.Count && FieldSize + counter < steps.Count)
+            {
+                var field = GetResultField(fields, steps.Take(FieldSize + counter), matchedFields);
+                if (field == null)
+                {
+                    counter++;
+                }
+                else
+                {
+                    matchedFields.Add(field);
+                    lastCounter = counter;   
+                }
+            }
+
+            Console.WriteLine(steps[FieldSize + lastCounter - 1]);
+            return GetMatrixSum(matchedFields[^1], steps.Take(FieldSize + lastCounter))
+                   * steps[FieldSize + lastCounter - 1];
         }
 
         private static List<int> GetSteps(string filePath = FileTestPath) => File.ReadAllLines(filePath)[0]
@@ -87,8 +106,13 @@ namespace AdventOfCode
         private static bool IsMatched(int number, IEnumerable<int> steps) => 
             steps.Any(step => step == number);
 
-        private static int[,] GetResultField(IEnumerable<int[,]> fields, IEnumerable<int> steps)
+        private static int[,] GetResultField(IEnumerable<int[,]> fields, 
+            IEnumerable<int> steps, 
+            IEnumerable<int[,]> matchesField = null)
         {
+            if (matchesField != null)
+                fields = fields.Where(field => !matchesField.Contains(field));
+            
             foreach (var field in fields)
             {
                 for (var column = 0; column < FieldSize; column++)
