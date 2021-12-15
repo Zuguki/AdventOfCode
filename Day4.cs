@@ -29,6 +29,11 @@ namespace AdventOfCode
             return GetMatrixSum(field, steps.Take(FieldSize + counter)) * steps[FieldSize + counter - 1];
         }
 
+        public static int Task2()
+        {
+            return 1;
+        }
+
         private static List<int> GetSteps(string filePath = FileTestPath) => File.ReadAllLines(filePath)[0]
             .Split(',')
             .Select(int.Parse)
