@@ -7,8 +7,8 @@ namespace AdventOfCode
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine(Day3.Task1());
-            Console.WriteLine(Day3.Task2());
+            Console.WriteLine(Day4.Task1());
+            // Console.WriteLine(Day3.Task2());
         }
     }
 }
