@@ -20,6 +20,10 @@ namespace AdventOfCode
             for (var position = 0; position <= crabPositions[^1]; position++)
             {
                 var fuel = crabPositions.Sum(crabPosition => GetSwapFuel(crabPosition, position));
+                
+                if (minFuel < fuel)
+                    break;
+                
                 minFuel = minFuel < fuel ? minFuel : fuel;
             }
 
