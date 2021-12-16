@@ -33,6 +33,11 @@ namespace AdventOfCode
             return numbers.Count;
         }
 
+        public static int Task2()
+        {
+            return 1;
+        }
+
         private static List<int> GetFileInput(string filePath = FileTestPath) => File.ReadAllLines(filePath)[0]
             .Where(c => c != ',')
             .Select(c => int.Parse(c.ToString()))
