@@ -41,6 +41,11 @@ namespace AdventOfCode
             return correct;
         }
 
+        public static int Task2()
+        {
+            return 1;
+        }
+
         private static List<string[]> GetFileInput(string fileName = FileTestPath) => File.ReadAllLines(fileName)
                 .Select(s => s.Split('|'))
                 .Select(segmentArr => segmentArr[1]
